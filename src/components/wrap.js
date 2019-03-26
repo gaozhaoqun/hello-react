@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ClickCounter from './ClickCounter'
+import { Header } from './header'
 
 class Wrap extends Component {
     constructor(props) {
@@ -38,6 +39,7 @@ class Wrap extends Component {
     render() {
         return (
             <div>
+                <Header></Header>
                 <button onClick={this.changeCount}>click ne</button>
                 <ClickCounter count={this.state.count}></ClickCounter>
             </div>

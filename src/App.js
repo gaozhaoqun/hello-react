@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Wrap from './wrap'
+import Wrap from './components/wrap'
 
 /**
  * 高内囊指的是把逻辑紧密相关的内容放在一个组件中 。
