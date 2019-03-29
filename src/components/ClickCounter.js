@@ -18,6 +18,19 @@ class ClickCounter extends Component { // 使用的是 ES6 语法来创建一个
     // constructor(props) {
     //     super()
     // }
+    constructor(props) {
+        super(props)
+        this.state = {
+            testValue: 'default'
+        }
+        this.testChange = this.testChange.bind(this)
+    }
+
+    testChange(e) {
+        this.setState({
+            testValue: e.target.value
+        })
+    }
 
     render() {
         const countStyle = {
@@ -28,6 +41,12 @@ class ClickCounter extends Component { // 使用的是 ES6 语法来创建一个
             <div>
                 <div style={countStyle}>
                     Click Count: {this.props.count}
+                </div>
+                <div>
+                    <input type="text" onChange={this.testChange} value={this.state.testValue} />&emsp;
+                    <div style={countStyle}>
+                        双向数据绑定: {this.state.testValue}
+                    </div>
                 </div>
             </div>
         )
@@ -41,3 +60,14 @@ export default ClickCounter
  * React判断一个元素是 HTML元素还是 React组件的原则就是看第一个字母是否大 写，
  * 如果在 JSX 中我们不用 ClickCounter 而是用 clickCounter，那就得不到我们想要的结果。
  */
+
+
+//  var inherit = (function () {
+//      var F = function () {}
+//      return function (Target, Origin) {
+//         F.prototype = Origin.prototype
+//         Target.prototype = new F()
+//         Target.prototype.constructor = Target
+//         Target.prototype.uber = Origin.prototype
+//      }
+//  })()
