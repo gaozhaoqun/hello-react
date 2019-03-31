@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import TodoItem from './todp-item'
 
 class List extends Component {
     constructor(props) {
@@ -10,9 +11,8 @@ class List extends Component {
     }
 
     inputChange = (e) => {
-        this.setState({
-            todoValue: e.target.value
-        })
+        const v = e.target.value
+        this.setState(() => ({ todoValue: v }))
     }
 
     handleItemClick() {
@@ -31,28 +31,34 @@ class List extends Component {
     }
 
     render() {
+        let mgb = {marginBottom: '400px'}
         return (
-            <div>
+            <div style={mgb}>
                 <div>
                     <ul>
-                        {
-                            this.state.arr.map( (item, index) => {
-                                return (
-                                    <li 
-                                        onClick={this.handleDeleteItem.bind(this, index)} 
-                                        key={index}
-                                        >
-                                        {item}
-                                    </li>  // 把index传进去 再用splice方法删除
-                                )
-                            })
-                        }
+                    <input onChange={this.inputChange} value={this.state.todoValue} type="text"/>
+                    <div>
+                        <button onClick={this.handleItemClick.bind(this)}>todo Button</button>
+                    </div>
+                        { this.getReturnItem() }
                     </ul>
                 </div>
-                <input onChange={this.inputChange} value={this.state.todoValue} type="text"/>
-                <div><button onClick={this.handleItemClick.bind(this)}>todo Button</button></div>
+                
             </div>
         )
+    }
+    getReturnItem() {  // JSX中尽量不要写带逻辑的, 可以提取出来用法代替
+        return this.state.arr.map( (item, index) => {
+            return (
+                <TodoItem 
+                    content={item} 
+                    handleDelete={this.handleDeleteItem} 
+                    i={index} 
+                    key={index}
+                >
+                </TodoItem>
+            )
+        })
     }
 }
 
