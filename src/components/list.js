@@ -8,6 +8,7 @@ class List extends Component {
             arr: [],
             todoValue: ''
         }
+        this.handleItemClick = this.handleItemClick.bind(this)
     }
 
     inputChange = (e) => {
@@ -16,18 +17,19 @@ class List extends Component {
     }
 
     handleItemClick() {
-        this.setState({
-            arr: [...this.state.arr, this.state.todoValue],
+        const { arr, todoValue } = this.state
+        this.setState( () => ({
+            arr: [...arr, todoValue],
             todoValue: ''
-        })
+        }))
     }
 
     handleDeleteItem = (index) => {
         const myarr = [...this.state.arr]   // React 规定不要直接操作 state里的数据!!! 会影响性能优化
         myarr.splice(index, 1)
-        this.setState({
+        this.setState( () => ({
             arr: [...myarr]
-        })
+        }))
     }
 
     render() {
@@ -38,17 +40,17 @@ class List extends Component {
                     <ul>
                     <input onChange={this.inputChange} value={this.state.todoValue} type="text"/>
                     <div>
-                        <button onClick={this.handleItemClick.bind(this)}>todo Button</button>
+                        <button onClick={this.handleItemClick}>todo Button</button>
                     </div>
                         { this.getReturnItem() }
                     </ul>
                 </div>
-                
             </div>
         )
     }
     getReturnItem() {  // JSX中尽量不要写带逻辑的, 可以提取出来用法代替
-        return this.state.arr.map( (item, index) => {
+        const { arr } = this.state
+        return arr.map( (item, index) => {
             return (
                 <TodoItem 
                     content={item} 
