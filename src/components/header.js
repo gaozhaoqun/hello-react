@@ -1,62 +1,55 @@
-import React, { Component } from 'react';
-
+import React, { Component } from "react";
 
 export class Header extends Component {
-    constructor(props) {
-        super(props)
-        // this.onMakeOlder = this.onMakeOlder.bind(this)
-        this.state = {
-            age: props.initalAge
-        }
-        this.getHobbies = this.getHobbies.bind(this)
-    }
+  constructor(props) {
+    super(props);
+    // this.onMakeOlder = this.onMakeOlder.bind(this)
+    this.state = {
+      age: props.initalAge
+    };
+    this.getHobbies = this.getHobbies.bind(this);
+  }
 
-    onMakeOlder = () => {
-        this.setState( () => ({
-            age: this.state.age += 1
-        }))
-        // this.state.age += 1  // 这个值改变也不渲染页面, react规定 state的值改变才渲染页面
-    }
+  onMakeOlder = () => {
+    this.setState(() => ({
+      age: (this.state.age += 1)
+    }));
+    // this.state.age += 1  // 这个值改变也不渲染页面, react规定 state的值改变才渲染页面
+  };
 
-    handleProps = () => {
-        this.props.toFather(this.state.age)  // 子组件接收父组件传递过来的方法, 再利用函数执行的参数传回去
-    }
-    
-    componentDidMount() {
-        // this.handleProps()
-    }
+  handleProps = () => {
+    this.props.toFather(this.state.age); // 子组件接收父组件传递过来的方法, 再利用函数执行的参数传回去
+  };
 
-    getHobbies() {
-        const { hobbies } = this.props
-        return hobbies.map( (item, i) => <p key={i}> {item} </p>)
-    }
+  componentDidMount() {
+    // this.handleProps()
+  }
 
-    render() {
-        return (
-            <div className="header">
-                <button onClick={this.handleProps}>Son To Fahter</button>
-                <br/>
-                Hobbies列表
-                <ul>
-                    {this.getHobbies()}
-                </ul>
-                age: {this.state.age}
-                <div>
-                    <button onClick={this.onMakeOlder}>click me</button>
-                </div>
-                <div>
-                    {this.props.children}
-                </div>
-                <br/>
-                兄弟组件传值
-                <hr />
-                <div>
-                    <h1>
-                        {this.props.homeLink}
-                    </h1>
-                    <span>我是header组件</span>
-                </div>
-            </div>
-        )
-    }
+  getHobbies() {
+    const { hobbies } = this.props;
+    return hobbies.map((item, i) => <p key={i}> {item} </p>);
+  }
+
+  render() {
+    return (
+      <div className="header">
+        <button onClick={this.handleProps}>Son To Fahter</button>
+        <br />
+        Hobbies列表
+        <ul>{this.getHobbies()}</ul>
+        age: {this.state.age}
+        <div>
+          <button onClick={this.onMakeOlder}>click me</button>
+        </div>
+        <div>{this.props.children}</div>
+        <br />
+        兄弟组件传值
+        <hr />
+        <div>
+          <h1>{this.props.homeLink}</h1>
+          <span>我是header组件</span>
+        </div>
+      </div>
+    );
+  }
 }
