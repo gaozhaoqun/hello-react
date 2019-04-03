@@ -11,8 +11,9 @@ export class Header extends Component {
   }
 
   onMakeOlder = () => {
+    let age = this.state.age
     this.setState(() => ({
-      age: (this.state.age += 1)
+      age: (age += 1)
     }));
     // this.state.age += 1  // 这个值改变也不渲染页面, react规定 state的值改变才渲染页面
   };
