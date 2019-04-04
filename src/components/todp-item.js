@@ -10,6 +10,7 @@ class TodoItem extends Component {
     if (nextProps.content === this.props.content) {
       return false
     }
+    return true
   }
 
   handleDeleteItem() {

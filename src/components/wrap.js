@@ -3,6 +3,7 @@ import ClickCounter from "./ClickCounter";
 import { Header } from "./header";
 import Home from "./home";
 import List from "./list";
+import Animate from './animate/animate'
 
 import PropTypes from "prop-types";
 
@@ -70,6 +71,7 @@ class Wrap extends Component {
 
     return (
       <div>
+        {this.props.fatherToSun.to}
         <ClickCounter count={this.state.count} />
         <button onClick={this.changeCount}>changeCount</button>
         <hr />
@@ -92,6 +94,10 @@ class Wrap extends Component {
         <hr />
         <h1>List</h1>
         <List />
+        <hr/>
+        <h1>Animate</h1>
+        <Animate />
+        
       </div>
     );
   }

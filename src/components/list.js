@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import TodoItem from "./todp-item";
 
 class List extends Component {
@@ -9,15 +10,14 @@ class List extends Component {
       todoValue: ""
     };
     this.handleItemClick = this.handleItemClick.bind(this);
+    this.getDoubanApi = this.getDoubanApi.bind(this);
+    this.getBzhanApi = this.getBzhanApi.bind(this);
   }
-  
-  shouldComponentUpdate(nextProps,nextState){
-    if(nextState.Number === this.state.Number){
-      // console.log('shouldComponentUpdate')
-      return true
-    }
-}
-  
+
+  componentDidMount() {
+    this.getDoubanApi();
+    this.getBzhanApi();
+  }
 
   inputChange = e => {
     const v = e.target.value;
@@ -41,7 +41,6 @@ class List extends Component {
         );
       }
     );
-
     console.log(
       "先打印的是setState执行完," + this.ul.querySelectorAll("div").length
     ); // setState 是异步的, 这里打印的时候, ul 里还没添加div
@@ -81,7 +80,6 @@ class List extends Component {
     );
   }
 
-  
   getReturnItem() {
     // JSX中尽量不要写带逻辑的, 可以提取出来用法代替
     const { arr } = this.state;
@@ -97,7 +95,29 @@ class List extends Component {
     });
   }
 
-  
+  getDoubanApi() {
+    axios
+      .get("/v2/movie/in_theaters")
+      .then(res => {
+        // console.log(res.data)
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  getBzhanApi() {
+    axios.get("/index/recommend.json").then(res => {
+      let list = res.data.list;
+      // console.log(list) // 类数组: [{…}, {…}, {…}, {…}, {…}, {…}]
+      // console.log(Object.keys(list))//  ["0", "1", "2", "3", "4", "5"]
+      // console.log(Object.prototype.toString.call( Object.keys(list)) ) // [object Array]
+      // Object.keys 返回一个所有元素为字符串的数组，其元素来自于从给定的object上面可直接枚举的属性。这些属性的顺序与手动遍历该对象属性时的一致。
+      const myArr = [...this.state.arr]  // 尽量打散再传给myArr, 避免res里的数据发生改变造成错乱
+      Object.keys(list).map( item => myArr.push(list[item].title))
+      this.setState(() => ( { arr: myArr}) )
+    });
+  }
 }
 
 export default List;

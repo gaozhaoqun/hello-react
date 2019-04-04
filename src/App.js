@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+
+// import Wrap from './components/wrap'
+import Anttodo from './components/antd/AntTodolist'
 import './App.css';
-import Wrap from './components/wrap'
 
 /**
  * 高内囊指的是把逻辑紧密相关的内容放在一个组件中 。
@@ -30,17 +32,27 @@ import Wrap from './components/wrap'
   优点:  1. 性能提升   2. 它使得跨端应用得以实现, React Native
   */
 
+  /*
+    componentWillReceiveProp 生命周期函数: 
+      一个组件要从父组件接收props
+      如果这个组件第一次存在父组件中, 不会执行
+      如果这个组件之前已经存在于父组件中, 才回执行
+    
+    shouldComponentUpdate 生命周期函数: 
+      决定该子组件的render函数 是否重新渲染, 可以提升性能
+
+    componentWilIMount
+      发 ajax的
+  */
 
 class App extends Component {
-  constructor(props) {
-    super()
-  }
   render() {
-    const obj = {to: '父传子'}
+    // const obj = {to: '父传子'}
     return (
       <div className="App">
         <header className="App-header">
-          <Wrap FatherToSun={obj} />
+          {/* <Wrap fatherToSun={obj} /> */}
+          <Anttodo />
         </header>
       </div>
     );
