@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
+import TodoUi from './todoUi'
 import 'antd/dist/antd.css'; 
-import { Input, Button, List } from 'antd';
+
 import store from '../../store'
+import { getInputChangeAction, getAddItemList, getDeleItem, getTodoList } from '../../store/actionCreators'
 
 
 class Anttodo extends Component {
@@ -18,47 +20,36 @@ class Anttodo extends Component {
   }
 
   handleInputChange = (e) => {
-    const action = {
-      type: 'change_input_value',
-      value: e.target.value
-    }
-   store.dispatch(action) // 向 store 传递 action 来修改数据
+    const action = getInputChangeAction(e.target.value)
+    store.dispatch(action) // 向 store 传递 action 来修改数据
   }
 
   handleInputClick = () => {
-    const action = {
-      type: 'add_item_list'
-    }
+    const action = getAddItemList()
     store.dispatch(action)
   }
 
   deleteItem = (index) => {
-    const action = {
-      type: 'delete_item',
-      value: index
-    }
+    const action = getDeleItem(index)
     store.dispatch(action)
   }
 
   render() {
     return (
-      <div>
-        <div>
-          <Input onChange={this.handleInputChange} value={this.state.inputValue} placeholder="Todo Info" style={{width: 300, marginRight: 10}} />
-          <Button type="primary" onClick={this.handleInputClick}>Commit</Button>
-        </div>
-        <List
-          style={{ marginTop: '20px', color: '#2a2' }}
-          bordered
-          dataSource={this.state.list}
-          renderItem={ (item, index) => (
-            <List.Item onClick={this.deleteItem.bind(this, index)}>
-              {item}
-            </List.Item>
-          )}
-        />
-      </div>
+      <TodoUi 
+      handleInputChange={this.handleInputChange} 
+      inputValue={this.state.inputValue}
+      handleInputClick={this.handleInputClick}
+      list={this.state.list}
+      deleteItem={this.deleteItem}
+      />
     )
+  }
+
+  componentDidMount() {
+    // this.getInitJson()
+    const action = getTodoList()
+    store.dispatch(action)  // 把这个action 发给store, 这个action会自动执行, 就是 actionCreators里 getTodoList 返回的函数!
   }
 }
 
