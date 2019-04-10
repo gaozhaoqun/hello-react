@@ -1,16 +1,28 @@
 import { createStore, applyMiddleware, compose } from 'redux'  // applyMiddleware是引入 redux-thunk
-import thunk from 'redux-thunk';  // applyMiddleware是引入 redux-thunk
 import reducer from './reducer'
 
+// import thunk from 'redux-thunk';  // applyMiddleware是引入 redux-thunk
+import createSagaMiddleware from 'redux-saga'  // 引入 saga
+import mySaga from './sagas'
+
+
+const sagaMiddleware = createSagaMiddleware() // 创建个 saga
 const composeEnhancers = typeof window ===  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
 
+/* 
+  store里的数据, 
+    1. 如果要被改变, 首先创建个 action, 把数据给到store
+    2. 调用 store.dispatch()
+*/
 const enhancer = composeEnhancers(
-  applyMiddleware(thunk)
+  // applyMiddleware(thunk)
+  applyMiddleware(sagaMiddleware)
 );
 const store = createStore(
   reducer,
   enhancer 
 )
+sagaMiddleware.run(mySaga)
 
 export default store
 

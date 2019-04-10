@@ -1,5 +1,5 @@
-import { CHANGE_INPUT_VALUE, ADD_ITEM_LIST, DELETE_ITEM, GET_INIT_JSON } from '../store/actionTypes'
-import axios from 'axios' // 配置好redux-thunk 就可以在这里请求异步数据
+import { CHANGE_INPUT_VALUE, ADD_ITEM_LIST, DELETE_ITEM, GET_INIT_JSON, GET_INIT_LIST_SAGA } from '../store/actionTypes'
+// import axios from 'axios' // 配置好redux-thunk 就可以在这里请求异步数据
 
 export const getInputChangeAction = value => ({
   type: CHANGE_INPUT_VALUE,
@@ -20,6 +20,11 @@ export const getInitJson = data => ({
   value: data  // 返回 axios请求的data 赋值给 value, 在reducer中 以 action.value使用
 })
 
+export const getInitJsonSaga = () => ({
+  type: GET_INIT_LIST_SAGA
+})
+
+/* 
 // 使用了redux-thunk actionCreators返回的就可以是一个函数了, 正常只能返回一个对象
 export const getTodoList = () => {  // 组件AntTodolist Didmount 里使用getTodoList发起一个action
   return (dispatch) => {
@@ -30,3 +35,4 @@ export const getTodoList = () => {  // 组件AntTodolist Didmount 里使用getTo
     })
   }
 }
+*/

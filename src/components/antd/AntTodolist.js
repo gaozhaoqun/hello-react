@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import TodoUi from './todoUi'
 import 'antd/dist/antd.css'; 
-
 import store from '../../store'
-import { getInputChangeAction, getAddItemList, getDeleItem, getTodoList } from '../../store/actionCreators'
+import { getInputChangeAction, getAddItemList, getDeleItem, getInitJsonSaga } from '../../store/actionCreators'
 
 
 class Anttodo extends Component {
@@ -37,19 +36,29 @@ class Anttodo extends Component {
   render() {
     return (
       <TodoUi 
-      handleInputChange={this.handleInputChange} 
-      inputValue={this.state.inputValue}
-      handleInputClick={this.handleInputClick}
-      list={this.state.list}
-      deleteItem={this.deleteItem}
+        handleInputChange={this.handleInputChange} 
+        inputValue={this.state.inputValue}
+        handleInputClick={this.handleInputClick}
+        list={this.state.list}
+        deleteItem={this.deleteItem}
       />
     )
   }
 
+  /*
+  // 使用 redux-thunk
   componentDidMount() {
     // this.getInitJson()
     const action = getTodoList()
     store.dispatch(action)  // 把这个action 发给store, 这个action会自动执行, 就是 actionCreators里 getTodoList 返回的函数!
+  }
+  */
+
+
+  // 使用 saga 中间件
+  componentDidMount() {
+    const action = getInitJsonSaga()
+    store.dispatch(action)
   }
 }
 
